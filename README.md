@@ -1,4 +1,4 @@
-<h1 align="center">ARBindNet</h1>
+<h1 align="center">ARBindNet: Self-Supervised Geometric Representation Learning for Binding Domain Recognition in Transmembrane Proteins</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.10-3776AB?logo=python&amp;logoColor=white" alt="Python 3.10">
@@ -20,13 +20,7 @@
 
 ## 🧬 Overview
 
-ARBindNet is a geometric deep-learning workflow for learning protein binding-domain representations from three-dimensional structures. It models each protein domain with two coupled graphs:
-
-1. **Atom graph.** Atomic features, coordinates, and pairwise edge features are encoded by an E(n)-equivariant graph neural network (EGNN).
-2. **Residue graph.** Residue scalar/vector features and geometric edge features are encoded by a geometric vector perceptron (GVP) network.
-3. **Cross-level fusion.** Atom embeddings are pooled to their parent residues and fused with residue embeddings.
-4. **Self-supervised objectives.** Pretraining combines a symmetric atom/residue contrastive objective with masked atom-type and coordinate reconstruction.
-5. **Downstream prediction.** The pretrained encoders are fine-tuned for binary domain recognition or ligand-category classification.
+ARBindNet is a geometric deep-learning framework for protein binding-domain analysis. It integrates atom-level and residue-level structural representations for self-supervised pretraining and downstream prediction tasks.
 
 <p align="center">
   <img src="Figure/model.jpg" alt="ARBindNet architecture" width="900">
