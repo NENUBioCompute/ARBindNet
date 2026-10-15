@@ -153,32 +153,12 @@ Use `--freeze_encoders` in the training command inside `run.sh` to train only th
 
 ### 🧩 6. Train the ligand multiclass classifier
 
-The split directory must contain:
-
-```text
-train.txt
-val.txt
-test.txt
-class_mapping.json
-```
-
-Each split line uses the format `<hdf5_path> <class_index>`. `class_mapping.json` maps integer indices (stored as JSON strings) to class names. This mapping file is required by the training script and must be prepared for the selected ligand classes.
+Each split line uses the format `<hdf5_path> <class_index>`. `class_mapping.json` maps integer indices (stored as JSON strings) to class names. Configure the required paths and cluster settings in `ligand_multiclass/multiclass.sh`, then submit the job:
 
 ```bash
 cd ligand_multiclass
-python train_ligand_multiclass.py \
-  --split_dir input \
-  --output_dir output \
-  --stats_path ../weights/norm_stats.pt \
-  --pretrained_model_path ../weights/pretrain_best_model.pt \
-  --batch_size 32 \
-  --epochs 50 \
-  --lr 1e-4 \
-  --weighted_sampler \
-  --device cuda
-cd ..
+sbatch multiclass.sh
 ```
-
 For evaluation only, use `--test_only` together with `--checkpoint_path`.
 
 ## ⚖️ Released weights
@@ -187,28 +167,22 @@ The `weights/` directory currently provides:
 
 | File | Description |
 | --- | --- |
-| `pretrain_best_model.pt` | Pretrained ARBindNet checkpoint |
-| `norm_stats.pt` | Atom/residue feature normalization statistics |
-| `domain_recognition00.pt`–`domain_recognition04.pt` | Domain-recognition checkpoints from multiple runs/seeds |
-| `ligand_multiclass_best.pt` | Ligand multiclass checkpoint |
+| `pretrain_best_model.pt` | Pretrained checkpoint |
+| `norm_stats.pt` | feature normalization statistics |
+| `domain_recognition00.pt`–`domain_recognition04.pt` | Binding Domain recognition checkpoints from multiple random seeds |
+| `ligand_multiclass_best.pt` | Ligand multiclass classification checkpoint |
 
-Load checkpoints only from trusted sources. PyTorch checkpoint files use Python serialization and should not be treated as untrusted data.
 
 ## 🔁 Reproducibility notes
 
 - Input list files may contain paths from the original server and should be regenerated or updated for a new installation.
 - The supplied SLURM scripts are examples and include cluster-specific partitions and working directories.
-- `ligand_multiclass/input/` does not currently include `class_mapping.json`; create it before running ligand multiclass training.
 - Generated HDF5 files, logs, and intermediate datasets are not required to be committed to Git and can be stored separately.
 - For a clean source distribution, remove Python cache files (`__pycache__/` and `*.pyc`) and add them to `.gitignore`.
 
 ## 📖 Citation
 
 If you use ARBindNet in academic work, please cite the associated publication. Citation details will be added when available.
-
-## 📜 License
-
-No license file is currently included in this repository. Please contact the repository owners before reuse or redistribution, and add an explicit open-source license if public reuse is intended.
 
 ## 💬 Contact
 
