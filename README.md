@@ -58,8 +58,6 @@ The provided environment targets Linux with Python 3.10, PyTorch 2.0.1, CUDA 11.
 | DGL | 2.1 with CUDA 11.8 |
 | GPU | CUDA-capable GPU recommended |
 
-Additional dependencies include torch-scatter, Biopython, Biopandas, RDKit, h5py, NumPy, SciPy, pandas, scikit-learn, and MSMS for molecular-surface calculations during sample generation.
-
 Create the environment with:
 
 ```bash
