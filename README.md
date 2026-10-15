@@ -1,24 +1,47 @@
-# ARBindNet
+<h1 align="center">ARBindNet</h1>
 
-ARBindNet is a geometric deep-learning workflow for learning protein binding-domain representations from three-dimensional structures. It jointly models proteins at two resolutions:
+<p align="center">
+  <strong>Multi-scale geometric representation learning for protein binding-domain analysis</strong>
+</p>
 
-- an atom-level graph encoded with an E(n)-equivariant graph neural network (EGNN); and
-- a residue-level graph encoded with a geometric vector perceptron (GVP) network.
+<p align="center">
+  An atom–residue dual-graph framework for self-supervised pretraining,<br>
+  binding-domain recognition, and ligand-category classification.
+</p>
 
-The two representations are aligned and fused for self-supervised pretraining and downstream tasks, including binding-domain recognition and ligand-category classification.
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.10-3776AB?logo=python&amp;logoColor=white" alt="Python 3.10">
+  <img src="https://img.shields.io/badge/PyTorch-2.0.1-EE4C2C?logo=pytorch&amp;logoColor=white" alt="PyTorch 2.0.1">
+  <img src="https://img.shields.io/badge/DGL-2.1-4C72B0" alt="DGL 2.1">
+  <img src="https://img.shields.io/badge/CUDA-11.8-76B900?logo=nvidia&amp;logoColor=white" alt="CUDA 11.8">
+</p>
 
-![ARBindNet architecture](Figure/model.jpg)
+<p align="center">
+  <a href="#overview">Overview</a> ·
+  <a href="#repository-structure">Repository</a> ·
+  <a href="#installation">Installation</a> ·
+  <a href="#workflow">Workflow</a> ·
+  <a href="#released-weights">Checkpoints</a> ·
+  <a href="#citation">Citation</a>
+</p>
 
-## Highlights
+---
 
-- PDB structure download and binding-site sample generation
-- Atom- and residue-level graph construction
-- Multi-scale geometric representation learning with EGNN and GVP encoders
-- Cross-level atom-to-residue fusion
-- Self-supervised pretraining with cross-level contrastive learning and masked atom reconstruction
-- Binary binding-domain recognition
-- Ligand-category multiclass classification
-- Pretrained checkpoints and normalization statistics
+## Overview
+
+ARBindNet is a geometric deep-learning workflow for learning protein binding-domain representations from three-dimensional structures. It models each protein domain with two coupled graphs:
+
+1. **Atom graph.** Atomic features, coordinates, and pairwise edge features are encoded by an E(n)-equivariant graph neural network (EGNN).
+2. **Residue graph.** Residue scalar/vector features and geometric edge features are encoded by a geometric vector perceptron (GVP) network.
+3. **Cross-level fusion.** Atom embeddings are pooled to their parent residues and fused with residue embeddings.
+4. **Self-supervised objectives.** Pretraining combines a symmetric atom/residue contrastive objective with masked atom-type and coordinate reconstruction.
+5. **Downstream prediction.** The pretrained encoders are fine-tuned for binary domain recognition or ligand-category classification.
+
+<p align="center">
+  <img src="Figure/model.jpg" alt="ARBindNet architecture" width="900">
+</p>
+
+---
 
 ## Repository structure
 
@@ -37,31 +60,18 @@ ARBindNet/
 └── environment.yml         # Conda environment specification
 ```
 
-## Model overview
-
-ARBindNet represents each protein domain with two coupled graphs:
-
-1. **Atom graph.** Atomic features, coordinates, and pairwise edge features are encoded by an EGNN.
-2. **Residue graph.** Residue scalar/vector features and geometric edge features are encoded by a GVP network.
-3. **Cross-level fusion.** Atom embeddings are pooled to their parent residues and fused with residue embeddings.
-4. **Self-supervised objectives.** Pretraining combines a symmetric atom/residue contrastive objective with masked atom-type and coordinate reconstruction.
-5. **Downstream prediction.** The pretrained encoders are fine-tuned for binary domain recognition or ligand-category classification.
-
-## Requirements
+## Installation
 
 The provided environment targets Linux with Python 3.10, PyTorch 2.0.1, CUDA 11.8, DGL 2.1, and common structural-bioinformatics packages. A CUDA-capable GPU is recommended for training.
 
-Major dependencies include:
+| Component | Version or requirement |
+| --- | --- |
+| Python | 3.10 |
+| PyTorch | 2.0.1 with CUDA 11.8 |
+| DGL | 2.1 with CUDA 11.8 |
+| GPU | CUDA-capable GPU recommended |
 
-- Python 3.10
-- PyTorch 2.0.1 with CUDA 11.8
-- DGL 2.1 with CUDA 11.8
-- torch-scatter
-- Biopython and Biopandas
-- RDKit
-- h5py
-- NumPy, SciPy, pandas, and scikit-learn
-- MSMS for molecular-surface calculations during sample generation
+Additional dependencies include torch-scatter, Biopython, Biopandas, RDKit, h5py, NumPy, SciPy, pandas, scikit-learn, and MSMS for molecular-surface calculations during sample generation.
 
 Create the environment with:
 
@@ -74,22 +84,7 @@ conda activate tyt_ae
 
 The exported environment contains CUDA-specific packages. Adjust the PyTorch, DGL, and CUDA builds if your system uses a different CUDA version or CPU-only execution.
 
-## Important path configuration
-
-Several scripts currently contain absolute paths from the original compute server. Before running the full workflow on another system, locate and replace them:
-
-```bash
-grep -R "/datapool/" -n \
-  data_sample graph_construction pretrain domain_recognition ligand_multiclass
-```
-
-In particular, review:
-
-- the default output directory in `data_sample/sample_pipeline/data_preprocessing.py`;
-- PDB/HDF5 paths and the input list in `graph_construction/create_graph.py`;
-- the normalization-statistics path in `pretrain/train_PRE.py`;
-- the normalization-statistics paths in `domain_recognition/finetune.py`; and
-- the working directories and data paths in the provided SLURM scripts.
+---
 
 ## Workflow
 
