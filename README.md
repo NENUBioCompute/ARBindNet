@@ -20,7 +20,8 @@
 
 ## 🧬 Overview
 
-ARBindNet is a geometric deep-learning framework for protein binding-domain analysis. It integrates atom-level and residue-level structural representations for self-supervised pretraining and downstream prediction tasks.
+ARBindNet constructs a hierarchical cross-scale representation comprising an atom graph, a residue graph, and an atom-to-residue mapping, thereby integrating local chemical interactions at the atomic scale with conformational dependencies at the residue scale. During self-supervised pretraining, the backbone networks are optimized through cross-scale contrastive learning and masked atom reconstruction. During fine-tuning, the pretrained weights initialize the downstream model, while a feature-fusion module generates task-specific binding-domain representations for binding-domain recognition and ligand-class prediction.
+
 
 <p align="center">
   <img src="Figure/model.jpg" alt="ARBindNet architecture" width="900">
