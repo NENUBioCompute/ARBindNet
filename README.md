@@ -35,13 +35,13 @@ ARBindNet is a hierarchical geometric learning framework for protein binding-dom
 ```text
 ARBindNet/
 ├── data_download/          # PDB ID list and RCSB PDB download script
-├── data_sample/            # Binding-domain sampling and preprocessing utilities
-│   ├── IEProtLib/          # Molecular and geometric data-processing utilities
-│   └── sample_pipeline/    # PDB-to-domain/HDF5 preprocessing pipeline
+├── data_sample/            # Binding domain sampling and preprocessing utilities
+│   ├── IEProtLib/          
+│   └── sample_pipeline/    
 ├── graph_construction/     # Atom/residue graph construction and data splits
-├── pretrain/               # Self-supervised ARBindNet pretraining
-├── domain_recognition/     # Binary binding-domain classification
-├── ligand_multiclass/      # Ligand-category multiclass classification
+├── pretrain/               # Self-supervised pretraining
+├── domain_recognition/     # Binding domain recognition
+├── ligand_multiclass/      # Ligand class prediction
 ├── weights/                # Released checkpoints and normalization statistics
 ├── Figure/                 # Model architecture figure
 └── environment.yml         # Conda environment specification
