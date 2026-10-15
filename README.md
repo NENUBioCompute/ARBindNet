@@ -20,8 +20,7 @@
 
 ## 🧬 Overview
 
-ARBindNet constructs a hierarchical cross-scale representation comprising an atom graph, a residue graph, and an atom-to-residue mapping, thereby integrating local chemical interactions at the atomic scale with conformational dependencies at the residue scale. During self-supervised pretraining, the backbone networks are optimized through cross-scale contrastive learning and masked atom reconstruction. During fine-tuning, the pretrained weights initialize the downstream model, while a feature-fusion module generates task-specific binding-domain representations for binding-domain recognition and ligand-class prediction.
-
+ARBindNet is a hierarchical geometric learning framework for protein binding domain recognition. It couples atom-level and residue-level graphs through an atom-to-residue mapping, capturing local chemical interactions and higher-order conformational dependencies within a unified cross-scale representation. The framework is pretrained using cross-scale contrastive learning and masked atom reconstruction, and subsequently fine-tuned with task-specific feature fusion for binding domain recognition and ligand class prediction.
 
 <p align="center">
   <img src="Figure/model.jpg" alt="ARBindNet architecture" width="900">
