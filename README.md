@@ -83,28 +83,23 @@ python download.py
 cd ..
 ```
 
-### 🧪 2. Generate binding-domain samples
+### 🧪 2. Generate binding domain samples
 
 The preprocessing pipeline accepts either one PDB file or a directory of PDB files:
 
 ```bash
 cd data_sample/sample_pipeline
 python data_preprocessing.py --pdbpath ../../data_download/TMPDB
-cd ../..
 ```
-
-Before running this command, configure the output directory (`w_dir`) in `data_preprocessing.py` and ensure that the `msms` executable is available on `PATH`.
-
 The pipeline identifies positive and negative domains, writes domain-level PDB files, records ligand information, and generates HDF5 molecular representations.
 
 ### 🕸️ 3. Construct atom and residue graphs
 
-Edit the input list, PDB directories, and output directory near the bottom of `graph_construction/create_graph.py`, then run:
+Configure the required paths in graph_construction/create_graph.py, then run:
 
 ```bash
 cd graph_construction
 python create_graph.py
-cd ..
 ```
 
 Each graph HDF5 file is expected to contain:
