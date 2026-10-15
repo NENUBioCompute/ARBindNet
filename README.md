@@ -118,29 +118,20 @@ protein/
 
 ### 🧠 4. Pretrain ARBindNet
 
-Prepare an input directory containing `train_list.txt`, `val_list.txt`, and `test_list.txt`. Each non-empty line must be the path to one `.hdf5` graph file.
-
-Ensure that `pretrain/train_PRE.py` loads the intended normalization statistics (for example, `weights/norm_stats.pt`) or re-enable the included statistics-computation code. Then run:
+Prepare an input directory containing `train_list.txt`, `val_list.txt`, and `test_list.txt`. Each non-empty line must be the path to one `.hdf5` graph file. Configure the cluster settings and paths in `pretrain/PRE.sh`, then submit the job:
 
 ```bash
 cd pretrain
-python main_PRE.py \
-  --input_dir input \
-  --output_dir output \
-  --batch_size 128 \
-  --lr 1e-4 \
-  --epochs 500 \
-  --patience 10
-cd ..
+sbatch PRE.sh
 ```
 
 The best checkpoint is selected by validation loss. Pretraining optimizes:
 
-- symmetric atom/residue contrastive loss;
+- contrastive loss;
 - masked atom-type reconstruction loss; and
 - masked coordinate reconstruction loss.
 
-### 🎯 5. Fine-tune for binding-domain recognition
+### 🎯 5. Fine-tune for binding domain recognition
 
 The input directory must contain:
 
@@ -153,21 +144,12 @@ val_labels.txt
 test_labels.txt
 ```
 
-Label files use whitespace-separated `<hdf5_path> <label>` records, where the label is `0` or `1`. After configuring the normalization-statistics path in `domain_recognition/finetune.py`, run:
-
+Label files use whitespace-separated `<hdf5_path> <label>` records, where the label is `0` or `1`. Configure the required paths and cluster settings in `domain_recognition/run.sh`, then submit the job:
 ```bash
 cd domain_recognition
-python main.py \
-  --input_dir input \
-  --output_dir output \
-  --pretrained_model_path ../weights/pretrain_best_model.pt \
-  --batch_size 128 \
-  --lr 1e-4 \
-  --finetune_epochs 200
-cd ..
+sbatch run.sh
 ```
-
-Use `--freeze_encoders` to train only the downstream classifier. The repository also includes `run.sh` as a SLURM template; update its partition, working directory, and data paths before submission.
+Use `--freeze_encoders` in the training command inside `run.sh` to train only the downstream classifier.
 
 ### 🧩 6. Train the ligand multiclass classifier
 
