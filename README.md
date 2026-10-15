@@ -27,7 +27,7 @@
 
 ---
 
-## Overview
+## 🧬 Overview
 
 ARBindNet is a geometric deep-learning workflow for learning protein binding-domain representations from three-dimensional structures. It models each protein domain with two coupled graphs:
 
@@ -43,7 +43,7 @@ ARBindNet is a geometric deep-learning workflow for learning protein binding-dom
 
 ---
 
-## Repository structure
+## 📁 Repository structure
 
 ```text
 ARBindNet/
@@ -60,7 +60,7 @@ ARBindNet/
 └── environment.yml         # Conda environment specification
 ```
 
-## Installation
+## ⚙️ Installation
 
 The provided environment targets Linux with Python 3.10, PyTorch 2.0.1, CUDA 11.8, DGL 2.1, and common structural-bioinformatics packages. A CUDA-capable GPU is recommended for training.
 
@@ -86,9 +86,9 @@ The exported environment contains CUDA-specific packages. Adjust the PyTorch, DG
 
 ---
 
-## Workflow
+## 🚀 Workflow
 
-### 1. Download PDB structures
+### 📥 1. Download PDB structures
 
 `data_download/pdb_list.txt` contains the PDB identifiers. The download script retrieves corresponding structures from RCSB PDB and writes them to `data_download/TMPDB/`.
 
@@ -98,7 +98,7 @@ python download.py
 cd ..
 ```
 
-### 2. Generate binding-domain samples
+### 🧪 2. Generate binding-domain samples
 
 The preprocessing pipeline accepts either one PDB file or a directory of PDB files:
 
@@ -112,7 +112,7 @@ Before running this command, configure the output directory (`w_dir`) in `data_p
 
 The pipeline identifies positive and negative domains, writes domain-level PDB files, records ligand information, and generates HDF5 molecular representations.
 
-### 3. Construct atom and residue graphs
+### 🕸️ 3. Construct atom and residue graphs
 
 Edit the input list, PDB directories, and output directory near the bottom of `graph_construction/create_graph.py`, then run:
 
@@ -136,7 +136,7 @@ protein/
 └── atom_residue_id
 ```
 
-### 4. Pretrain ARBindNet
+### 🧠 4. Pretrain ARBindNet
 
 Prepare an input directory containing `train_list.txt`, `val_list.txt`, and `test_list.txt`. Each non-empty line must be the path to one `.hdf5` graph file.
 
@@ -160,7 +160,7 @@ The best checkpoint is selected by validation loss. Pretraining optimizes:
 - masked atom-type reconstruction loss; and
 - masked coordinate reconstruction loss.
 
-### 5. Fine-tune for binding-domain recognition
+### 🎯 5. Fine-tune for binding-domain recognition
 
 The input directory must contain:
 
@@ -189,7 +189,7 @@ cd ..
 
 Use `--freeze_encoders` to train only the downstream classifier. The repository also includes `run.sh` as a SLURM template; update its partition, working directory, and data paths before submission.
 
-### 6. Train the ligand multiclass classifier
+### 🧩 6. Train the ligand multiclass classifier
 
 The split directory must contain:
 
@@ -219,7 +219,7 @@ cd ..
 
 For evaluation only, use `--test_only` together with `--checkpoint_path`.
 
-## Released weights
+## ⚖️ Released weights
 
 The `weights/` directory currently provides:
 
@@ -232,7 +232,7 @@ The `weights/` directory currently provides:
 
 Load checkpoints only from trusted sources. PyTorch checkpoint files use Python serialization and should not be treated as untrusted data.
 
-## Reproducibility notes
+## 🔁 Reproducibility notes
 
 - Input list files may contain paths from the original server and should be regenerated or updated for a new installation.
 - The supplied SLURM scripts are examples and include cluster-specific partitions and working directories.
@@ -240,14 +240,14 @@ Load checkpoints only from trusted sources. PyTorch checkpoint files use Python 
 - Generated HDF5 files, logs, and intermediate datasets are not required to be committed to Git and can be stored separately.
 - For a clean source distribution, remove Python cache files (`__pycache__/` and `*.pyc`) and add them to `.gitignore`.
 
-## Citation
+## 📖 Citation
 
 If you use ARBindNet in academic work, please cite the associated publication. Citation details will be added when available.
 
-## License
+## 📜 License
 
 No license file is currently included in this repository. Please contact the repository owners before reuse or redistribution, and add an explicit open-source license if public reuse is intended.
 
-## Contact
+## 💬 Contact
 
 For questions and bug reports, please open an issue in the [ARBindNet repository](https://github.com/NENUBioCompute/ARBindNet/issues).
