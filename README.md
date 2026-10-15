@@ -1,15 +1,6 @@
 <h1 align="center">ARBindNet</h1>
 
 <p align="center">
-  <strong>Multi-scale geometric representation learning for protein binding-domain analysis</strong>
-</p>
-
-<p align="center">
-  An atom–residue dual-graph framework for self-supervised pretraining,<br>
-  binding-domain recognition, and ligand-category classification.
-</p>
-
-<p align="center">
   <img src="https://img.shields.io/badge/Python-3.10-3776AB?logo=python&amp;logoColor=white" alt="Python 3.10">
   <img src="https://img.shields.io/badge/PyTorch-2.0.1-EE4C2C?logo=pytorch&amp;logoColor=white" alt="PyTorch 2.0.1">
   <img src="https://img.shields.io/badge/DGL-2.1-4C72B0" alt="DGL 2.1">
